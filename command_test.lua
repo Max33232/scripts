@@ -495,6 +495,6 @@ end)
 -- Notification
 game:GetService("StarterGui"):SetCore("SendNotification", {
     Title = "Build A Boat Auto Farm",
-    Text = "Script loaded! После смерти фарм продолжается мгновенно",
+    Text = "Script loaded!",
     Duration = 4
 })
