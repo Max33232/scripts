@@ -1,5 +1,8 @@
--- COMMAND TEST - АНАЛОГ INFINITE YIELD (АВТОР: TEST)
--- ПОЛНАЯ ПЕРЕРАБОТКА: НАЗВАНИЕ COMMAND TEST, НОВОЕ МЕНЮ
+-- COMMAND TEST - ПОЛНАЯ ПЕРЕРАБОТКА INFINITE YIELD
+-- АВТОР: TEST
+-- ИЗМЕНЕНИЯ: НАЗВАНИЕ "COMMAND TEST", НОВОЕ МЕНЮ
+
+-- [[ ВСЯ СТРУКТУРА GUI ПОЛНОСТЬЮ ПЕРЕПИСАНА ПОД НАЗВАНИЕ "COMMAND TEST" ]]
 
 -- ОСНОВНОЕ МЕНЮ (ПЕРЕДЕЛАНО)
 local gui = Instance.new("ScreenGui")
@@ -80,8 +83,6 @@ local localPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local camera = workspace.CurrentCamera
-
--- ==================== КОМАНДЫ ====================
 
 -- ТЕЛЕКИНЕЗ
 addButton("TELEKINESIS (ИНСТРУМЕНТ)", Color3.fromRGB(80, 80, 200), function()
@@ -228,12 +229,12 @@ addButton("ПОЛЁТ (ВКЛ/ВЫКЛ)", Color3.fromRGB(100, 150, 200), functio
     end
 end)
 
--- КНОПКА ЗАКРЫТИЯ
+-- ЗАКРЫТЬ
 addButton("ЗАКРЫТЬ МЕНЮ", Color3.fromRGB(200, 50, 50), function()
     gui:Destroy()
 end)
 
--- ПЕРЕТАСКИВАНИЕ GUI
+-- ПЕРЕТАСКИВАНИЕ
 local dragging = false
 local dragStart, framePos
 
