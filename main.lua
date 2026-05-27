@@ -1,209 +1,303 @@
--- TELEKINESIS С FLUENT МЕНЮ (БЕЗ ПАРОЛЯ) - АВТОР: TEST
-
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
-
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local localPlayer = Players.LocalPlayer
-local camera = workspace.CurrentCamera
-
--- УДАЛЯЕМ СТАРЫЙ ИНСТРУМЕНТ
-if localPlayer.Backpack:FindFirstChild("telekinesis pm") then
-    localPlayer.Backpack["telekinesis pm"]:Destroy()
+local re=game:GetService("Workspace")
+local sandbox=function(var,func)
+	local env=getfenv(func)
+	local newenv=setmetatable({},{
+		__index=function(self,k)
+			if k=="script" then
+				return var
+			else
+				return env[k]
+			end
+		end,
+	})
+	setfenv(func,newenv)
+	return func
 end
+cors={}
+local _Name="telekinesis test"
+local uis=game:GetService("UserInputService")
+local _Ins, _CF_new, _VTR_new=Instance.new, CFrame.new, Vector3.new
+mas=_Ins("Model",game:GetService("Lighting"))
+local con=getfenv().sethiddenproperty
+Tool0=_Ins("Tool")
+Part1=_Ins("Part")
+Script2=_Ins("Script")
+local selectionbox=Instance.new("SelectionBox", game:GetService("Players").LocalPlayer.Character)
+selectionbox.LineThickness=0.1
+selectionbox.Color3=Color3.fromRGB(255, 255, 0)	
+LocalScript3=_Ins("LocalScript")
+re=game:GetService("RunService")
+Tool0.Name=_Name
+Tool0.Parent=mas
+Tool0.Grip=_CF_new(0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Tool0.GripPos=_VTR_new(0, 0, 1)
+Part1.Name="Handle"
+Part1.Parent=Tool0
+local changed="Changed"
+Part1.CFrame=_CF_new(-3.5, 5.30000019, -3.5, 1, 0, 0, 0, -1, 0, 0, 0, -1)
+Part1.Orientation=_VTR_new(0, 180, 180)
+Part1.Position=_VTR_new(-3.5, 5.300000190734863, -3.5)
+Part1.Rotation=_VTR_new(-180, 0, 0)
+Part1.Color=Color3.new(0.972549, 0.972549, 0.972549)
+Part1.Transparency=1
+local cam=re.RenderStepped
+local w=wait
+Part1.Size=_VTR_new(1, 1, 1)
+Part1.BottomSurface=Enum.SurfaceType.Smooth
+Part1.BrickColor=BrickColor.new("Institutional white")
+Part1.Locked=true
+local speed=31
+local mb=uis.TouchEnabled
+Part1.TopSurface=Enum.SurfaceType.Smooth
+Part1.brickColor=BrickColor.new("Institutional white")
+Script2.Name="LineConnect"
+Script2.Parent=Tool0
+local Sound=_Ins("Sound", game.Workspace)
+Sound.SoundId="rbxassetid://18604320771"
+Sound:Play()
+cam:Connect(function() if con then con(game:GetService("Players").LocalPlayer, changed, speed) end end)
+table.insert(cors,sandbox(Script2,function()
+	w()
+	local check=script.Part2
+	local part1=script.Part1.Value
+	local part2=script.Part2.Value
+	local parent=script.Par.Value
+	local color=script.Color
+	local line=_Ins("Part")
+	line.TopSurface=0
+	line.BottomSurface=0
+	line.Reflectance=.5
+	line.Name="Laser"
+	line.Locked=true
+	line.CanCollide=false
+	line.Anchored=true
+	line.formFactor=0
+	line.Size=_VTR_new(1,1,1)
+	local mesh=_Ins("BlockMesh")
+	mesh.Parent=line
+	while true do
+		if (check.Value==nil) then break end
+		if (part1==nil or part2==nil or parent==nil) then break end
+		if (part1.Parent==nil or part2.Parent==nil) then break end
+		if (parent.Parent==nil) then break end
+		local lv=_CF_new(part1.Position,part2.Position)
+		local dist=(part1.Position-part2.Position).magnitude
+		line.Parent=parent
+		line.BrickColor=color.Value.BrickColor
+		line.Reflectance=color.Value.Reflectance
+		line.Transparency=color.Value.Transparency
+		line.CFrame=_CF_new(part1.Position+lv.lookVector*dist/2)
+		line.CFrame=_CF_new(line.Position,part2.Position)
+		mesh.Scale=_VTR_new(.25,.25,dist)
+		w()
+	end
+	line:remove()
+	script:remove() 
+end))
+changed="SimulationRadius"
+Script2.Disabled=true
+LocalScript3.Name="MainScript"
+LocalScript3.Parent=Tool0
+table.insert(cors,sandbox(LocalScript3,function()
+	w() 
+	tool=script.Parent
+	lineconnect=tool.LineConnect
+	object=nil
+	mousedown=false
+	found=false
+	BP=_Ins("BodyPosition")
+	BP.maxForce=_VTR_new(math.huge*math.huge,math.huge*math.huge,math.huge*math.huge) --pwns everyone elses bodyposition
+	BP.P=BP.P*3
+	dist=nil
+	point=_Ins("Part")
+	point.Locked=true
+	point.Anchored=true
+	point.formFactor=0
+	point.Shape=0
+	point.BrickColor=BrickColor.Blue() 
+	point.Size=_VTR_new(1,1,1)
+	point.CanCollide=false
+	local mesh=_Ins("SpecialMesh")
+	mesh.MeshType="Sphere"
+	mesh.Scale=_VTR_new(.7,.7,.7)
+	mesh.Parent=point
+	handle=tool.Handle
+	front=tool.Handle
+	color=tool.Handle
+	objval=nil
+	local hooked=false 
+	local hookBP=BP:clone() 
+	hookBP.maxForce=_VTR_new(900000,900000,900000) 
 
--- СОЗДАНИЕ ИНСТРУМЕНТА
-local tool = Instance.new("Tool")
-tool.Name = "telekinesis pm"
-tool.RequiresHandle = false
+	local LineConnect=function(part1,part2,parent)
+		local p1=_Ins("ObjectValue")
+		p1.Value=part1
+		p1.Name="Part1"
+		local p2=_Ins("ObjectValue")
+		p2.Value=part2
+		p2.Name="Part2"
+		local par=_Ins("ObjectValue")
+		par.Value=parent
+		par.Name="Par"
+		local col=_Ins("ObjectValue")
+		col.Value=color
+		col.Name="Color"
+		local s=lineconnect:clone()
+		s.Disabled=false
+		p1.Parent=s
+		p2.Parent=s
+		par.Parent=s
+		col.Parent=s
+		s.Parent=workspace
+		if (part2==object) then
+			objval=p2
+		end
+	end
 
-local selectedPart = nil
-local following = false
-local bv = nil
-local selectionBox = Instance.new("SelectionBox")
-selectionBox.LineThickness = 0.1
-selectionBox.Color3 = Color3.fromRGB(255, 255, 0)
+	local onButton1Down=function(mouse)
+		if (mousedown==true) then return end
+		mousedown=true
+		coroutine.resume(coroutine.create(function()
+			local p=point:clone()
+			p.Parent=tool
+			LineConnect(front,p,workspace)
+			while (mousedown==true) do
+				p.Parent=tool
+				if (object==nil) then
+					if (mouse.Target==nil) then
+						local lv=_CF_new(front.Position,mouse.Hit.p)
+						p.CFrame=_CF_new(front.Position+(lv.lookVector*1000))
+					else
+						p.CFrame=_CF_new(mouse.Hit.p)
+					end
+				else
+					LineConnect(front,object,workspace)
+					break
+				end
+				w()
+			end
+			p:remove()
+		end))
+		while (mousedown==true) do
+			if (mouse.Target~=nil) then
+				local t=mouse.Target
+				if (t.Anchored==false) then
+					object=t
+					selectionbox.Adornee=object
+					dist=(object.Position-front.Position).magnitude
+					break
+				end
+			end
+			w()
+		end
+		while (mousedown==true) do
+			if (object.Parent==nil) then break end
+			local lv=_CF_new(front.Position,mouse.Hit.p)
+			BP.Parent=object
+			BP.position=front.Position+lv.lookVector*dist
+			w()
+		end
+		BP:remove()
+		object=nil
+		objval.Value=nil
+		selectionbox.Adornee=nil
+	end
 
--- ФУНКЦИЯ ПОИСКА БЛОКА
-local function getTarget()
-    local char = localPlayer.Character
-    if not char then return nil end
-    local mousePos = UserInputService:GetMouseLocation()
-    local ray = camera:ScreenPointToRay(mousePos.X, mousePos.Y)
-    local params = RaycastParams.new()
-    params.FilterDescendantsInstances = {char}
-    params.FilterType = Enum.RaycastFilterType.Exclude
-    local result = workspace:Raycast(ray.Origin, ray.Direction * 100, params)
-    if result and result.Instance and result.Instance:IsA("BasePart") and not result.Instance.Anchored and not result.Instance:IsDescendantOf(char) then
-        return result.Instance
-    end
-    return nil
+	local onKeyDown=function(key,mouse) 
+		local key=key:lower() 
+		local yesh=false 
+		if (key=="q") then 
+			if (dist>=5) then 
+				dist=dist-5 
+			end 
+		end
+		if (key=="") then 
+			if (dist ~=1) then 
+				BX=_Ins("BodyGyro")
+				BX.MaxTorque=_VTR_new(math.huge,0,math.huge)
+				BX.CFrame=BX.CFrame * CFrame.Angles(0, math.rad(45), 0)
+				BX.D=0
+				BX.Parent=object
+				--object.CFrame=CFrame.Angles(math.rad(90), 0,0) -- not used
+				--object.Orientation=_VTR_new(50,0,0)
+				--BX.Orientation=_VTR_new(23,0,0)
+			end 
+		end 
+		if (key=="") then 
+			if (dist ~=1) then
+				BX=_Ins("BodyVelocity")
+				BX.maxForce=_VTR_new(0,math.huge,0)
+				BX.velocity=_VTR_new(0,1,0)
+				--BX.CFrame=BX.CFrame * CFrame.Angles(0, math.rad(45), 0)
+				BX.Parent=object
+			end 
+		end 
+		if key == "" then 
+			if (object==nil) then return end 
+			for _,v in pairs(object:children()) do 
+				if v.className == "BodyGyro" then 
+					return nil 
+				end 
+			end 
+			BG=_Ins("BodyGyro") 
+			BG.maxTorque=_VTR_new(math.huge,math.huge,math.huge) 
+			BG.cframe=_CF_new(object.CFrame.p) 
+			BG.Parent=object 
+			repeat w() until(object.CFrame == _CF_new(object.CFrame.p))
+			BG.Parent=nil 
+			if (object==nil) then return end 
+			for _,v in pairs(object:children()) do 
+				if v.className == "BodyGyro" then 
+					v.Parent=nil 
+				end 
+			end 
+			object.Velocity=_VTR_new(0,0,0) 
+			object.RotVelocity=_VTR_new(0,0,0) 
+		end 
+		if (key=="y") then 
+			if (dist ~=100) then 
+				dist=100 
+			end 
+		end 
+		if (key=="j") then 
+			if (dist~=5000) then 
+				dist=5000 
+			end 
+		end
+		if (key=="e") then
+			dist=dist+5
+		end
+		if (key=="x") then 
+			if dist ~= 15 then 
+				dist=15 
+			end 
+		end 
+	end
+	local onEquipped=function(mouse)
+		keymouse=mouse
+		local char=tool.Parent
+		human=char.Humanoid
+		human.Changed:connect(function() if (human.Health==0) then mousedown=false BP:remove() point:remove() tool:remove() end end)
+		mouse.Button1Down:connect(function() onButton1Down(mouse) end)
+		mouse.KeyDown:connect(function(key) onKeyDown(key,mouse) end)
+		mouse.Icon="rbxasset://textures\\GunCursor.png"
+		if mb then
+			uis.TouchLongPress:Connect(function() onKeyDown("y",mouse) end)
+			uis.TouchEnded:Connect(function() mousedown=false end)
+		else
+			mouse.Button1Up:connect(function() mousedown=false end)
+		end
+	end
+	tool.Equipped:connect(onEquipped)
+	tool.Unequipped:connect(function() mousedown=false end)
+end))
+for i,v in pairs(mas:GetChildren()) do
+	v.Parent=game:GetService("Players").LocalPlayer.Backpack
+	pcall(function() v:MakeJoints() end)
 end
-
--- ПОДНЯТЬ БЛОК
-local function pickUp(part)
-    selectedPart = part
-    following = true
-    selectionBox.Adornee = selectedPart
-    selectedPart.CanCollide = false
-    
-    bv = Instance.new("BodyVelocity")
-    bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-    bv.Parent = selectedPart
-    
-    RunService.RenderStepped:Connect(function()
-        if not following or not selectedPart or not selectedPart.Parent then
-            if bv then bv:Destroy() end
-            if selectedPart then selectedPart.CanCollide = true end
-            following = false
-            selectionBox.Adornee = nil
-            return
-        end
-        local mousePos = UserInputService:GetMouseLocation()
-        local ray = camera:ScreenPointToRay(mousePos.X, mousePos.Y)
-        local targetPos = ray.Origin + ray.Direction * 10
-        bv.Velocity = (targetPos - selectedPart.Position) * 12
-    end)
+mas:Destroy()
+for i,v in pairs(cors) do
+	spawn(function()
+		pcall(v)
+	end)
 end
-
--- БРОСИТЬ
-local function throwPart()
-    if selectedPart then
-        if bv then bv:Destroy() end
-        selectedPart.CanCollide = true
-        selectedPart.Velocity = camera.CFrame.LookVector * 150
-        selectedPart = nil
-        following = false
-        selectionBox.Adornee = nil
-    end
-end
-
--- АКТИВАЦИЯ ИНСТРУМЕНТА
-tool.Activated:Connect(function()
-    if following then
-        throwPart()
-    else
-        local target = getTarget()
-        if target then
-            pickUp(target)
-        end
-    end
-end)
-
-tool.Unequipped:Connect(function()
-    if following then
-        if bv then bv:Destroy() end
-        if selectedPart then selectedPart.CanCollide = true end
-        following = false
-        selectionBox.Adornee = nil
-        selectedPart = nil
-    end
-end)
-
-tool.Parent = localPlayer.Backpack
-
--- СОЗДАНИЕ FLUENT МЕНЮ
-local Window = Fluent:CreateWindow({
-    Title = "Telekinesis Control",
-    SubTitle = "by TEST",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(450, 400),
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.RightAlt
-})
-
-local Tabs = {
-    Main = Window:AddTab({ Title = "Управление", Icon = "hand" }),
-    Settings = Window:AddTab({ Title = "Настройки", Icon = "settings" })
-}
-
-local followSpeed = 12
-local throwForce = 150
-
-Tabs.Main:AddToggle("Toggle", {
-    Title = "Вкл/Выкл Телекинез",
-    Description = "Включает или отключает инструмент",
-    Default = true,
-    Callback = function(Value)
-        if Value then
-            tool.Parent = localPlayer.Backpack
-        else
-            if following then throwPart() end
-            tool.Parent = nil
-        end
-    end
-})
-
-Tabs.Main:AddSlider("Speed", {
-    Title = "Скорость следования",
-    Description = "Скорость движения блока",
-    Default = 12,
-    Min = 5,
-    Max = 30,
-    Rounding = 1,
-    Callback = function(Value)
-        followSpeed = Value
-    end
-})
-
-Tabs.Main:AddSlider("Throw", {
-    Title = "Сила броска",
-    Description = "Скорость броска блока",
-    Default = 150,
-    Min = 50,
-    Max = 500,
-    Rounding = 0,
-    Callback = function(Value)
-        throwForce = Value
-    end
-})
-
-Tabs.Main:AddButton({
-    Title = "Обновить инструмент",
-    Description = "Пересоздать инструмент в инвентаре",
-    Callback = function()
-        if tool then tool:Destroy() end
-        local newTool = Instance.new("Tool")
-        newTool.Name = "telekinesis pm"
-        newTool.RequiresHandle = false
-        newTool.Parent = localPlayer.Backpack
-        tool = newTool
-        Fluent:Notify({Title = "Инструмент", Content = "Пересоздан", Duration = 2})
-    end
-})
-
-Tabs.Settings:AddKeybind("MenuKey", {
-    Title = "Клавиша меню",
-    Description = "Открыть/закрыть меню",
-    Default = Enum.KeyCode.RightAlt,
-    Callback = function()
-        Window:Toggle()
-    end
-})
-
-Tabs.Settings:AddButton({
-    Title = "Уничтожить меню",
-    Description = "Закрыть меню и удалить GUI",
-    Callback = function()
-        Window:Destroy()
-    end
-})
-
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
-SaveManager:SetFolder("Telekinesis")
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-
-SaveManager:LoadAutoloadConfig()
-Window:SelectTab(1)
-
-Fluent:Notify({
-    Title = "Telekinesis",
-    Content = "Инструмент в инвентаре! Нажми ЛКМ на блок",
-    Duration = 4
-})
