@@ -1,4 +1,4 @@
--- TELEKINESIS БЕЗ ПАРОЛЯ (АВТОР: TEST)
+-- TELEKINESIS С FLUENT МЕНЮ (БЕЗ ПАРОЛЯ) - АВТОР: TEST
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
@@ -121,7 +121,6 @@ local Tabs = {
     Settings = Window:AddTab({ Title = "Настройки", Icon = "settings" })
 }
 
-local telekinesisEnabled = true
 local followSpeed = 12
 local throwForce = 150
 
@@ -130,8 +129,7 @@ Tabs.Main:AddToggle("Toggle", {
     Description = "Включает или отключает инструмент",
     Default = true,
     Callback = function(Value)
-        telekinesisEnabled = Value
-        if telekinesisEnabled then
+        if Value then
             tool.Parent = localPlayer.Backpack
         else
             if following then throwPart() end
@@ -182,7 +180,7 @@ Tabs.Settings:AddKeybind("MenuKey", {
     Title = "Клавиша меню",
     Description = "Открыть/закрыть меню",
     Default = Enum.KeyCode.RightAlt,
-    Callback = function(Key)
+    Callback = function()
         Window:Toggle()
     end
 })
