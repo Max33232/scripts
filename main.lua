@@ -1,5 +1,6 @@
 -- COMMAND TEST ADMIN SCRIPT (АВТОР: TEST)
 
+
 -- ОСНОВНОЕ МЕНЮ
 local gui = Instance.new("ScreenGui")
 gui.Name = "CommandTest"
